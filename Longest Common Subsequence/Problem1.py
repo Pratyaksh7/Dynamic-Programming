@@ -1,20 +1,20 @@
 # Longest Common Subsequence : Recursive -> Memoized -> Top Down DP
 
 def lcs(X, Y, n, m):
-    if n== 0 or m== 0:
-        return 0
+    for i in range(n+1):
+        for j in range(m+1):
+            if i == 0 or j == 0:
+                t[i][j] = 0
 
-    if t[n][m] != -1:
-        return t[n][m]
+    for i in range(1, n+1):
+        for j in range(1, m+1):
+            if X[i-1] == Y[j-1]:
+                t[i][j] = 1+t[i-1][j-1]
 
-    else:
-        if X[n-1] == Y[m-1]:
-            t[n][m] = (1+lcs(X, Y, n-1, m-1))
-            return t[n][m]
+            else:
+                t[i][j] = max(t[i][j-1], t[i-1][j])
 
-        else:
-            t[n][m] =  max(lcs(X, Y, n, m-1), lcs(X, Y, n-1, m))
-            return t[n][m]
+    return t[n][m]
 
 X = "abcdf"
 Y = "abedlf"
