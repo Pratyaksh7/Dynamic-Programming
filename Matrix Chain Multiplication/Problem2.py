@@ -15,7 +15,19 @@ def solve(string, i, j):
 
     mn = maxsize
     for k in range(i, j):
-        temp_ans = (1+ solve(string,i,k) + solve(string, k+1, j))
+        if t[i][k] != -1:       # more optimised code from here
+            left = t[i][k]
+        else:
+            left = solve(string,i,k)
+            t[i][k] = left
+
+        if t[k+1][j] != -1:
+            right = t[k+1][j]
+        else:
+            right = solve(string, k+1, j)
+            t[k+1][j] = right           # till here
+
+        temp_ans = (1+ left + right)
 
         mn = min(temp_ans, mn)
 
