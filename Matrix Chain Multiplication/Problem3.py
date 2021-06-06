@@ -10,6 +10,10 @@ def solve(string, i, j, isTrue):   # i/j -> True or False  k-> operator
             return string[i]== 'T'
         else:
             return string[i] == 'F'
+
+    if t[i][j][isTrue] != -1:
+        return t[i][j][isTrue]
+
     noOfWays = 0
     # k loop
     for k in range(i+1,j,2):
@@ -36,11 +40,13 @@ def solve(string, i, j, isTrue):   # i/j -> True or False  k-> operator
             else:
                 noOfWays = noOfWays + (leftTrue * rightTrue) + (leftFalse * rightFalse)
 
-    return noOfWays
+    t[i][j][isTrue] =  noOfWays
+    return t[i][j][isTrue]
 
 string = "T|T&F^T"
 i = 0
 j = len(string) - 1
 isTrue = True
 
+t = [[[-1 for _ in range(3)] for _ in range(len(string)+1)] for _ in range(len(string)+1)]
 print(solve(string, i, j, isTrue))
