@@ -9,16 +9,24 @@ def solve(string1, string2):
     if string1 == string2:
         return True
 
+    if t[n][n] != -1:
+        return t[n][n]
+
     for i in range(1,n):
         condition1 = solve(string1[:i], string2[:i]) and solve(string1[i:], string2[i:])
         condition2 = solve(string1[:-i], string2[i:]) and solve(string1[-i:], string2[:i]) # doubt in logic
 
         if condition1 or condition2:
-            return True
+            t[n][n] =  True
+            return t[n][n]
 
-    return False
+    t[n][n] = False
+    return t[n][n]
 
 string1 = "great"
 string2 = "grate"
+n = len(string1)
+
+t = [[-1 for j in range(n+1)]for i in range(n+1)]
 
 print(solve(string1, string2))
