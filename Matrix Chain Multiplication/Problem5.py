@@ -12,7 +12,20 @@ def solve(e,f):
 
     mn = maxsize
     for k in range(1,f):
-        temp = 1 + max(solve(e-1,k-1), solve(e, f-k)) # max is used for the worst case
+        # more optimized code
+        if t[e-1][k-1] != -1:
+            low = t[e-1][k-1]
+        else:
+            low = solve(e-1,k-1)
+            t[e-1][k-1] = low
+
+        if t[e][f-k] != -1:
+            high = t[e][f-k]
+        else:
+            high = solve(e, f-k)
+            t[e][f - k] = high
+
+        temp = 1 + max(low, high) # max is used for the worst case
         mn = min(mn, temp) # min used for the minimum attempts
 
     t[e][f] = mn
